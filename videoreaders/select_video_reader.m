@@ -1,7 +1,7 @@
 function vid = select_video_reader(filename, varargin)
 
-is_moviereader = any(endsWith(filename, ".movie"));
-is_videoreader = any(endsWith(filename, [".avi", ".mp4"]));
+is_moviereader = any(endsWith(filename, [".movie"]));
+is_videoreader = any(endsWith(filename, [".avi", ".mp4", ".MP4", ".MOV", ".mov"]));
 is_omereader   = any(endsWith(filename, [".czi", ".lif", ".oif", ".nd2"]));
 
 

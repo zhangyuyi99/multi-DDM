@@ -144,10 +144,12 @@ for tau = 1:max_tau
             tempdiff_stack = reshape(permute(...
                 reshape(tempdiff_chunk, row_span(rc), boxsize_vector(rc),[]), [2 1 3]),...
                 boxsize_vector(rc), boxsize_vector(rc), []);
+           
             
             % fft2 of difference image
             ft_tempdiff = fft2( tempdiff_stack ) * fft2_norm_factor(rc);
             
+%             save('intermediate_result.mat','tempdiff_stack', "ft_tempdiff");
             
             % accumulate
             if flag_gpu
@@ -174,6 +176,10 @@ for tau = 1:max_tau
             DRes(rc).accum_abs_FT_diff_image./ccc;
         
         for bc = 1:N_boxes(rc)
+
+            % Store the non-azimuthal averaged FFT result in Res
+            Res(rc).Box(bc).NonAvgIqtau(:, :,tau) = ...
+                DRes(rc).averaged_abs_FT_diff_image(:,:,bc);
             
             % radial average (no need to store this
             oneD_power_spectrum = ...

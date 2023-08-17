@@ -1,8 +1,12 @@
+
+% wheat video resolution: 3840*2160
+
 function [] = Analyse_Epithelix_func(data_folder, analysis_folder, files_string, boxes_mode)
 %Analyse_Epithelix_func allows the user to select a data folder, analysis
 %folder, files identification string, and sizes of the DDM windows, and
 %runs instances of the DDM_Analysis on all files thus selected.
 %
+
 %   Analyse_Epithelix_func() opens a GUI asking the user to input the
 %   variables needed
 %
@@ -56,7 +60,7 @@ end %if
 
 % files string
 if nargin < 3 || isempty(files_string)
-    files_string = '*.movie';
+    files_string = '*.mp4';
 end %if
 
 % boxsizes vector
@@ -120,7 +124,7 @@ try
             cilia.set_temperature(1);
             cilia.N_couple_frames_to_average = 200;
             cilia.VariableBoxSize_Analysis(boxsizes_vector);
-            cilia.SAVAlike_CBF_measurement;
+%             cilia.SAVAlike_CBF_measurement;
         else
             load(savename);
             cilia.load_movie;

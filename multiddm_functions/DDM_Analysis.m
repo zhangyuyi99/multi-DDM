@@ -294,6 +294,7 @@ classdef DDM_Analysis < matlab.mixin.Copyable
                 fprintf(['\n\tSetting up data structure for Analysis with BoxSize = ',num2str(BoxSize)]);
                 obj.Results(j).BoxSize = BoxSize;
                 obj.setup_DDM_on_Boxes(BoxSize);
+                fprintf(['\n\tDone setup_DDM_on_Boxes with BoxSize = ',num2str(BoxSize)]);
                 retrieved_max_mode_fitted = numel(obj.Results(j).Box(1).Frequency);
                 obj.Results(j).qVec = 2*pi*(1:retrieved_max_mode_fitted)./BoxSize; %good for plotting, have to retrieve up until which mode I fitted the Iqtau because it is not a property of the class
                 fprintf('\n\tDone');
@@ -375,6 +376,7 @@ classdef DDM_Analysis < matlab.mixin.Copyable
             Box_struct = struct(...
                 'std_fs',    zeros(BoxSize,'single'),...
                 'Iqtau',     zeros(max_mode, obj.max_tau, 'single'),...
+                'NonAvgIqtau', zeros(BoxSize, BoxSize, obj.max_tau, 'single'),...
                 'Frequency', zeros(max_mode_fitted,1),...
                 'Amplitude', zeros(max_mode_fitted,1),...
                 'Damping',   zeros(max_mode_fitted,1),...
@@ -407,6 +409,10 @@ classdef DDM_Analysis < matlab.mixin.Copyable
                 dummy(i) = sum(obj.row_sum_lstd_sfd(i:i+row_span-1));
             end
             [~,row_offset] = max(dummy);
+
+            col_offset = 1;
+            row_offset = 1;
+
             clear dummy
             cprintf('*[0 .5 0]','Done!')
             
@@ -678,7 +684,7 @@ classdef DDM_Analysis < matlab.mixin.Copyable
                 
                 bad_fits = false(size(temp_Frequency_mat)); %controllo per buttar via roba
                 
-                bad_fits(temp_Frequency_mat <=   1)  = true;    %exclude boxes where frequency too low (aka sth went wrong in the fit or the sample is still)
+                bad_fits(temp_Frequency_mat <=   0.01)  = true;    %exclude boxes where frequency too low (aka sth went wrong in the fit or the sample is still)
                 bad_fits(temp_Frequency_mat >=  30)  = true;    %exclude boxes where frequency too high (aka sth went wrong in the fit)
                 bad_fits(temp_Damping_mat   ==   0)  = true;    %exclude boxes where there is no damping (aka sth went wrong in the fit)
                 bad_fits(temp_Amplitude_mat <= eps)  = true;    %exclude boxes where signal too low
@@ -743,8 +749,8 @@ classdef DDM_Analysis < matlab.mixin.Copyable
             end
             
             % resize fs so that frame sizes are a multiple of bsz 
-            rect(3) = bsz*ceil(rect(3)/bsz);
-            rect(4) = bsz*ceil(rect(4)/bsz);
+            rect(3) = bsz*floor(rect(3)/bsz);
+            rect(4) = bsz*floor(rect(4)/bsz);
             % resize only if needed
             if (rect(3) ~= obj.Width) || (rect(4) ~= obj.Height)
                 fs = fs(rect(2):rect(2)+rect(4)-1,...

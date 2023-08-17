@@ -81,6 +81,7 @@ classdef VideoReaderWrapper < matlab.mixin.Copyable
             % read
             %             global fs
             fs = zeros(obj.Height, obj.Width, number_of_frames, 'uint8');
+%             number_of_frames = number_of_frames-2;
             for fc = 1:number_of_frames
                 if obj.vo.hasFrame
                     fs(:,:,fc) = squeezing_func(obj.vo.readFrame);

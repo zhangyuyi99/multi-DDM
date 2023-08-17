@@ -31,17 +31,22 @@ end % if
 mag_str = [num2str(mag), 'X'];
 mag_str_tofind = matlab.lang.makeValidName(mag_str);
 
-% read json
-known_mags = jsondecode(fileread(json_filename));
+% micron means meter here. for coherence we still use micron
+microns_per_pixel = 0.0145/mag;
+disp(mag);
+disp(microns_per_pixel);
 
-% check we have a match
-is_known_mag = ismember(mag_str_tofind, fieldnames(known_mags));
-if ~is_known_mag
-    warning(['Couldn''t find a magnification match in ', json_filename])
-    microns_per_pixel = -1;
-else 
-    % and read the found match
-    microns_per_pixel = known_mags.(mag_str_tofind);
-end % if
+% % read json
+% known_mags = jsondecode(fileread(json_filename));
+% 
+% % check we have a match
+% is_known_mag = ismember(mag_str_tofind, fieldnames(known_mags));
+% if ~is_known_mag
+%     warning(['Couldn''t find a magnification match in ', json_filename])
+%     microns_per_pixel = -1;
+% else 
+%     % and read the found match
+%     microns_per_pixel = known_mags.(mag_str_tofind);
+% end % if
 
 

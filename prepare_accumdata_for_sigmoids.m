@@ -11,9 +11,10 @@ cd('E:\Data\NatComms_Analysis\Exp3')
 
 % cell array of folder names. List all folders with the .mat you want to 
 % aggregate in a single structure
-analysis_folder = {'E:\Data\NatComms_Analysis\Exp3\00h';...
-    'E:\Data\NatComms_Analysis\Exp3\24h';...
-    'E:\Data\NatComms_Analysis\Exp3\48h'};
+% analysis_folder = {'E:\Data\NatComms_Analysis\Exp3\00h';...
+%     'E:\Data\NatComms_Analysis\Exp3\24h';...
+%     'E:\Data\NatComms_Analysis\Exp3\48h'};
+analysis_folder = {'C:\Users\46596\Desktop\Multi DDM\data\100MEDIA_Grayscale_Analysis'};
 
 
 % filtering string: of all files in the list of analysis_folder, only the ones 
