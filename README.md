@@ -73,6 +73,32 @@ An example of this is in the figures of the publication this code is supplementa
 However the code thus developed was quite specialised towards a particular
 task, and possibly less flexible and adaptable to the needs of other users. For this reason we preferred to provide a simpler plotting interface that would be a useful starting point to any user of multi-DDM.
 
+## Updates & Enhancements
+
+The following are significant updates and changes added to the Multi-DDM Analysis project:
+
+### Video Preprocessing:
+- Introduced `RGB_to_Grayscale.m` and `RGB_to_Grayscale.py`, enabling users to convert RGB videos to grayscale, making it more conducive for analysis.
+
+### Enhanced FFT Analysis:
+- Updates in `multiddm_functions/DDM_Analysis.m` and `multiddm_functions/multiDDM_core.m` now include an output for `NonEvgIqtau`—the average FFT of all frame differences with lag time tau that hasn't been azimuthally averaged. This crucial enhancement retains the wave information of different video directions.
+
+### Directional Plotting & Analysis:
+- The new `plotting_files` directory encapsulates the following advancements:
+  - `integrated_processing.mlx`: Automates the iteration through all DDM_analysis result `.mat` files in a directory, extracts `NonEvgIqtau` to produce a corresponding `*_NonEvgIqtau.mat` file, and then calculates the directioned `Iqtau` to generate a `*_NonEvgIqtau_angle_Iqtau.mat` file.
+  - Use `create_angle_mask_list.m` and `create_distance_map.m` to generate directional masks pivotal for the creation of `*_NonEvgIqtau_angle_Iqtau.mat`. The resultant masks are visualized as `.jpg` files in the `plotting_files/mask_plot/` directory.
+  - A modifiable fit function is provided in `fit_function.m` for tailored data fitting.
+  - Dedicated plotting scripts (`cilia_plot_directioned_Iqtau.mlx`, `circle_plot_directioned_Iqtau.mlx`, etc.) are available for different video categories such as cilia, synthetic waves, wheat videos, and more.
+
+### Technical Analysis:
+- `technical_analysis/Copy_of_read_mat_file.m`: Extracts major information from the DDM analysis result of a collection of videos and summarizes the data into a `.csv` file. Attributes like Filename, Height, Width, and others are conveniently captured.
+  - Summarized data for specific video categories like videos captured using a DJI drone, videos from Finland, and Nottingham are also available in `technical_analysis/DJI_videos.csv`, `technical_analysis/finn_videos.csv`, and `technical_analysis/nott_videos.csv` respectively.
+
+## DDM Project Pseudo Code Overview
+To aid in understanding the DDM project's structure and flow, we've provided a pseudo code blueprint. This gives a clear, high-level representation of the project's core logic, ideal for both new and existing contributors.
+
+![multi_ddm_plot](https://github.com/zhangyuyi99/multi-DDM/assets/57507104/fcfa04b7-a949-4d99-8064-1884bb574c77)
+
 
 ## Common issues and troubleshooting
 
